@@ -1,0 +1,2 @@
+# SmartBj
+A news app
