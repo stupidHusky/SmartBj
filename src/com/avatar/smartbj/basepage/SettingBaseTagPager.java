@@ -1,7 +1,10 @@
 package com.avatar.smartbj.basepage;
 
+import com.avatar.smartbj.activity.MainActivity;
+
 import android.content.Context;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -11,17 +14,19 @@ import android.widget.TextView;
  */
 public class SettingBaseTagPager extends BaseTagPage {
 
-	public SettingBaseTagPager(Context context) {
+	public SettingBaseTagPager(MainActivity context) {
 		super(context);
 	}
 
 	@Override
 	public void initData() {
+		im_menu.setVisibility(View.GONE);
 		tv_title.setText("设置中心");
-		TextView tv = new TextView(context);
+		TextView tv = new TextView(mainActivity);
 		tv.setTextSize(25);
 		tv.setText("设置的内容");
 		tv.setGravity(Gravity.CENTER);
+		content_fr.addView(tv);
 		super.initData();
 	}
 }

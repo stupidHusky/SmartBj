@@ -1,5 +1,7 @@
 package com.avatar.smartbj.basepage;
 
+import com.avatar.smartbj.activity.MainActivity;
+
 import android.content.Context;
 import android.view.Gravity;
 import android.widget.TextView;
@@ -11,17 +13,18 @@ import android.widget.TextView;
  */
 public class NewsCenterBaseTagPager extends BaseTagPage {
 
-	public NewsCenterBaseTagPager(Context context) {
+	public NewsCenterBaseTagPager(MainActivity context) {
 		super(context);
 	}
 
 	@Override
 	public void initData() {
 		tv_title.setText("新闻中心");
-		TextView tv = new TextView(context);
+		TextView tv = new TextView(mainActivity);
 		tv.setTextSize(25);
 		tv.setText("新闻中心内容");
 		tv.setGravity(Gravity.CENTER);
+		content_fr.addView(tv);
 		super.initData();
 	}
 }
