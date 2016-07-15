@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/behind_fragment_tv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip"
+    android:drawableLeft="@drawable/behind_arrow_selector"
+    android:drawablePadding="10dip"
+    android:enabled="false"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:padding="5dip"
+    android:textColor="@color/behind_lsit_font_colors_selector"
+    android:gravity="center_vertical"
+    android:textSize="20sp" />

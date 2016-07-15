@@ -51,9 +51,9 @@ public class MainFragment extends BaseFragment {
 	public void initData() {
 		pagers = new ArrayList<BaseTagPage>();
 		pagers.add(new HomeBaseTagPager(mainActivity));
-		pagers.add(new GovAffairsBaseTagPager(mainActivity));
 		pagers.add(new NewsCenterBaseTagPager(mainActivity));
 		pagers.add(new SmartServiceBaseTagPager(mainActivity));
+		pagers.add(new GovAffairsBaseTagPager(mainActivity));
 		pagers.add(new SettingBaseTagPager(mainActivity));
 
 		MyAapter adapter = new MyAapter();
@@ -61,6 +61,11 @@ public class MainFragment extends BaseFragment {
 //		viewPager.setOffscreenPageLimit(3);
 	}
 
+	public void selectLeftMenuClickToPage(int subSelectIndex){
+		BaseTagPage baseTagPage = pagers.get(selectIndex);
+		baseTagPage.switchPager(subSelectIndex);
+	}
+	
 	@Override
 	public void initEvent() {
 		// 手动点击切换viewpager
@@ -75,10 +80,10 @@ public class MainFragment extends BaseFragment {
 				case R.id.rb_main_newscenter:
 					selectIndex = 1;
 					break;
-				case R.id.rb_main_govaffairs:
+				case R.id.rb_main_smartservice:
 					selectIndex = 2;
 					break;
-				case R.id.rb_main_smartservice:
+				case R.id.rb_main_govaffairs:
 					selectIndex = 3;
 					break;
 				case R.id.rb_main_setting:
@@ -122,6 +127,7 @@ public class MainFragment extends BaseFragment {
 			BaseTagPage baseTagPage = pagers.get(position);
 			view = baseTagPage.getView();
 			container.addView(view);
+			baseTagPage.initData();
 			return view;
 		}
 
@@ -131,4 +137,5 @@ public class MainFragment extends BaseFragment {
 			container.removeView((View) object);
 		}
 	}
+
 }

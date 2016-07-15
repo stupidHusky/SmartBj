@@ -6,8 +6,8 @@ import com.avatar.smartbj.view.MainFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -57,5 +57,17 @@ public class MainActivity extends SlidingFragmentActivity {
 		Log.d(TAG, slidingWidth + "");
 		menu.setBehindOffset(Math.round(slidingWidth));
 
+	}
+	
+	public BehindFragment getBehindFagment(){
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		Fragment fragmentByTag = fragmentManager.findFragmentByTag(BEHINDFRAME);
+		return (BehindFragment) fragmentByTag;
+	}
+	
+	public MainFragment getMainFagment(){
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		Fragment fragmentByTag = fragmentManager.findFragmentByTag(CONTENTFRAME);
+		return (MainFragment) fragmentByTag;
 	}
 }

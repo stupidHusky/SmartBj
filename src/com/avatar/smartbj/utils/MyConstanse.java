@@ -6,6 +6,7 @@ package com.avatar.smartbj.utils;
  * @描述TODO 配置文件
  */
 public interface MyConstanse {
+	String NEWSCENTERURL = "http://10.0.2.2:8080/zhbj/categories.json";
 	String CONFIGLE = "cachefile";
 	String ISSETUP = "false";
 }

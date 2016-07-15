@@ -1,8 +1,10 @@
 package com.avatar.smartbj.basepage;
 
 import com.avatar.smartbj.activity.MainActivity;
+import com.avatar.smartbj.view.BehindFragment.OnSwitchPagerListener;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -27,4 +29,5 @@ public class SmartServiceBaseTagPager extends BaseTagPage {
 		content_fr.addView(tv);
 		super.initData();
 	}
+		
 }
