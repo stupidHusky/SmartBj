@@ -74,21 +74,21 @@ public class SplashActivity extends Activity {
 		RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 				0.5f);
-		rotateAnimation.setDuration(1000);
+		rotateAnimation.setDuration(2000);
 		rotateAnimation.setFillAfter(true);
 		animationSet.addAnimation(rotateAnimation);
 
 		AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-		alphaAnimation.setDuration(1000);
+		alphaAnimation.setDuration(2000);
 		alphaAnimation.setFillAfter(true);
 		animationSet.addAnimation(rotateAnimation);
 
 		ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1, 0, 1,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 				0.5f);
-		scaleAnimation.setDuration(1000);
+		scaleAnimation.setDuration(2000);
 		scaleAnimation.setFillAfter(true);
-		animationSet.addAnimation(rotateAnimation);
+		animationSet.addAnimation(scaleAnimation);
 
 		splashView.startAnimation(animationSet);
 	}

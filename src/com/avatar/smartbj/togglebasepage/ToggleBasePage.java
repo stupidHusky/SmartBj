@@ -11,9 +11,9 @@ public abstract class ToggleBasePage {
 
 	public ToggleBasePage(MainActivity mainActivity) {
 		this.mainActivity = mainActivity;
-		initView();
-		initEvent();
 		root = initView();
+		initEvent();
+		
 	}
 
 	public void initEvent() {

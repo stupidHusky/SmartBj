@@ -5,12 +5,15 @@ import java.util.List;
 
 import com.avatar.smartbj.activity.MainActivity;
 import com.avatar.smartbj.domain.NewsCenterData;
+import com.avatar.smartbj.domain.NewsCenterData.NewsData.ViewTagData;
 import com.avatar.smartbj.togglebasepage.IntteractBaseTogglePage;
 import com.avatar.smartbj.togglebasepage.NewsBaseTogglePage;
 import com.avatar.smartbj.togglebasepage.PhotoBaseTogglePage;
 import com.avatar.smartbj.togglebasepage.ToggleBasePage;
 import com.avatar.smartbj.togglebasepage.TopicBaseTogglePage;
+import com.avatar.smartbj.tpipagers.NewsTpiBasePage;
 import com.avatar.smartbj.utils.MyConstanse;
+import com.avatar.smartbj.utils.SpTool;
 import com.avatar.smartbj.view.BehindFragment.OnSwitchPagerListener;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
@@ -19,6 +22,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
@@ -32,6 +36,7 @@ public class NewsCenterBaseTagPager extends BaseTagPage {
 
 	private List<ToggleBasePage> togglePagers = new ArrayList<ToggleBasePage>();
 	private NewsCenterData newsCenterData;
+	private Gson gson;
 
 	public NewsCenterBaseTagPager(MainActivity context) {
 		super(context);
@@ -39,6 +44,13 @@ public class NewsCenterBaseTagPager extends BaseTagPage {
 
 	@Override
 	public void initData() {
+		// 先读取本地在读取网络
+		String jsonCach = SpTool.getString(mainActivity,
+				MyConstanse.NEWSCENTERURL, "");
+		if (!TextUtils.isEmpty(jsonCach)) {
+			ParseJson(jsonCach);
+		}
+
 		// 获取网络json数据
 		HttpUtils httpUtils = new HttpUtils();
 		httpUtils.send(HttpMethod.POST, MyConstanse.NEWSCENTERURL,
@@ -47,6 +59,9 @@ public class NewsCenterBaseTagPager extends BaseTagPage {
 					@Override
 					public void onSuccess(ResponseInfo<String> responseInfo) {
 						String json = responseInfo.result;
+						// 先将json缓存到本地
+						SpTool.setString(mainActivity,
+								MyConstanse.NEWSCENTERURL, json);
 						// 解析Json
 						ParseJson(json);
 					}
@@ -61,12 +76,12 @@ public class NewsCenterBaseTagPager extends BaseTagPage {
 	}
 
 	private void ParseJson(String json) {
-		Gson gson = new Gson();
+
+		if (gson == null)
+			gson = new Gson();
 		newsCenterData = gson.fromJson(json, NewsCenterData.class);
 		// 将新闻json显示到左侧behindfagment页签中。
 		mainActivity.getBehindFagment().setLeftMenuData(newsCenterData.data);
-		// new BehindFragment().setLeftMenuData(newsCenterData.data); //I don't
-		// know that the new object will cause the nullPointerException.
 		// System.out.println(fromJson.data.get(0).children.get(0).title);
 
 		// 将左侧页标签分别对应的标题放入容器，遍历
@@ -74,7 +89,8 @@ public class NewsCenterBaseTagPager extends BaseTagPage {
 			ToggleBasePage basePage = null;
 			switch (data.type) {
 			case 1:// news
-				basePage = new NewsBaseTogglePage(mainActivity);
+				basePage = new NewsBaseTogglePage(mainActivity,
+						newsCenterData.data.get(0).children);
 				break;
 			case 10:// topic
 				basePage = new TopicBaseTogglePage(mainActivity);
@@ -103,19 +119,21 @@ public class NewsCenterBaseTagPager extends BaseTagPage {
 		ToggleBasePage page = togglePagers.get(possition);
 		tv_title.setText(newsCenterData.data.get(possition).title);
 		content_fr.removeAllViews();
+		page.initData();
 		content_fr.addView(page.getView());
 	}
 
 	@Override
 	public void initEvent() {
-		mainActivity.getBehindFagment().setOnSwitchPagerListener(new OnSwitchPagerListener() {
-			
-			@Override
-			public void switchPager(int selectIndex) {
-				NewsCenterBaseTagPager.this.switchPager(selectIndex);
-			}
-		});
+		mainActivity.getBehindFagment().setOnSwitchPagerListener(
+				new OnSwitchPagerListener() {
+
+					@Override
+					public void switchPager(int selectIndex) {
+						NewsCenterBaseTagPager.this.switchPager(selectIndex);
+					}
+				});
 		super.initEvent();
-		
+
 	}
 }

@@ -22,4 +22,18 @@ public class SpTool {
 		return sp.getBoolean(key, defValue);
 
 	}
+	
+	public static void setString(Context context, String key, String value) {
+		SharedPreferences sp = context.getSharedPreferences(
+				MyConstanse.CONFIGLE, Context.MODE_PRIVATE);
+		sp.edit().putString(key, value).commit();
+	}
+
+	public static String getString(Context context, String key,
+			String defValue) {
+		SharedPreferences sp = context.getSharedPreferences(
+				MyConstanse.CONFIGLE, Context.MODE_PRIVATE);
+		return sp.getString(key, defValue);
+
+	}
 }
